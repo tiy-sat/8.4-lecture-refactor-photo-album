@@ -8,6 +8,7 @@
     "watch": "npm run watch-sass & npm run watch-js",
     "heroku-postbuild": "webpack",
     "start": "node index.js",
+    "start-dev": "npm run watch & npm start",
     "test": "jest"
   },
   "dependencies": {

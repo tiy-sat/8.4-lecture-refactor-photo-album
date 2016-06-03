@@ -2,19 +2,35 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import App from '../modules/App';
+import Modal from '../modules/Modal';
+import ImagesList from '../modules/ImagesList';
 
 jest.unmock("../modules/App");
+jest.unmock("../modules/ImagesList");
 
-describe('Node Heroku boilerplate', () => {
+describe('Photo album app component', () => {
+  var appRendered;
 
-  it('contains my name', () => {
-    // This places our component into our test to find off of
-    var appRendered = TestUtils.renderIntoDocument(
+  beforeEach(()=>{
+    appRendered = TestUtils.renderIntoDocument(
       <App/>
     );
+  })
+
+  it('mocked the modal class', () => {
+    // Expecting modal to have been mocked
+    expect(Modal.mock.calls.length).toBe(1);
+  });
+
+  it('renders images list', ()=> {
     // find h1 on page
-    var heading = TestUtils.findRenderedDOMComponentWithClass(appRendered, "heading");
-    // assert it has text
-    expect(heading.textContent).toEqual("Your Name");
+    var imagesList = TestUtils.findRenderedDOMComponentWithClass(appRendered, "imagesList");
+    expect(imagesList).toBeDefined();
+  });
+
+  it('handles state change for modal open', ()=>{
+    // call handle modal open function
+    appRendered.handleModalOpen();
+    expect(appRendered.state.modalOpen).toBe(true);
   });
 });
